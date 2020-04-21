@@ -1,5 +1,8 @@
 package com.wangyi.springBoot.modules.test.controller;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,9 @@ import com.wangyi.springBoot.modules.test.controller.vo.MyConfigBean;
 
 @Controller
 public class TestController {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(TestController.class);
+	
 	//全局配置文件
 	@Value("${server.port}")
 	private int port;
@@ -25,6 +31,18 @@ public class TestController {
 	@Autowired
 	private MyConfigBean myConfigBean;
 	
+	
+	//日志的五种级别trace<debug<info<warn<error
+	@RequestMapping("/test/log")
+	@ResponseBody
+	public String logTest() {
+		LOGGER.trace("this is trace log");
+		LOGGER.debug("this is debug log");
+		LOGGER.info("this is info log");
+		LOGGER.warn("this is warn log");
+		LOGGER.error("this is error log");
+		return "this is my logger test";
+	}
 	
 	/**
 	 * http://localhost/test/config

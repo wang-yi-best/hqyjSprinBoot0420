@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.padual.com/java/logback.xsd"
+	debug="false" scan="true" scanPeriod="30 second">
+
+	<!-- 自定义常量 -->
+	<property name="env" value="dev" />
+	<property name="PROJECT" value="springBoot_0420" />
+	<property name="ROOT" value="/log" />
+	<property name="FILESIZE" value="50MB" />
+	<property name="MAXHISTORY" value="100" />
+	<timestamp key="DATETIME" datePattern="yyyy-MM-dd HH:mm:ss" />
+	<property name="pattern" value="%d{${dateTime}} %-5level %logger{36} -- %msg%n" />
+	
+	<!-- 控制台打印 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="utf-8">
+			<pattern>${pattern}</pattern>
+			<!-- <pattern>[%-5level] %d{${DATETIME}} [%thread] %logger{36} - %m%n 
+				</pattern> -->
+		</encoder>
+	</appender>
+
+
+	<!-- ERROR 输入到文件，按日期和文件大小 -->
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder charset="utf-8">
+			<pattern>${pattern}</pattern>
+		</encoder>
+		<!-- <filter class="ch.qos.logback.classic.filter.LevelFilter"> <level>ERROR</level> 
+			<onMatch>ACCEPT</onMatch> <onMismatch>DENY</onMismatch> </filter> -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${ROOT}/${PROJECT}_${env}_%d.%i.log
+			</fileNamePattern>
+			<maxHistory>${MAXHISTORY}</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${FILESIZE}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+
+	<!-- 指定jar包输出日志级别(第三方jar包日志级别)，additivity：false，不会打印两次 -->
+	<Logger name="org.springframework" level="DEBUG" additivity="false">
+		<apender-ref ref="console" />
+		<apender-ref ref="file" />
+	</Logger>
+	<logger name="org.springframework" level="DEBUG" additivity="false">
+		<apender-ref ref="console" />
+		<apender-ref ref="file" />
+	</logger>
+
+	
+
+	<!-- Logger 根目录 -->
+	<root level="DEBUG">
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</root>
+</configuration>
