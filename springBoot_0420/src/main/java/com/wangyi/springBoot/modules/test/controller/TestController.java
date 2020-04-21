@@ -1,12 +1,56 @@
 package com.wangyi.springBoot.modules.test.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wangyi.springBoot.modules.test.controller.vo.MyConfigBean;
+
 @Controller
 public class TestController {
+	//全局配置文件
+	@Value("${server.port}")
+	private int port;
+	@Value("${com.hqyj.name}")
+	private String name;
+	@Value("${com.hqyj.age}")
+	private String age;
+	@Value("${com.hqyj.desc}")
+	private String desc;
+	@Value("${com.hqyj.random}")
+	private String random;
 	
+	@Autowired
+	private MyConfigBean myConfigBean;
+	
+	
+	/**
+	 * http://localhost/test/config
+	 * @return
+	 */
+	@RequestMapping("/test/config")
+	@ResponseBody
+	public String confgTest() {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(port).append("------------")
+		.append(name).append("------------")
+		.append(age).append("------------")
+		.append(desc).append("------------")
+		.append(random).append("------------").append("</br>");
+		
+		stringBuffer.append(myConfigBean.getName()).append("------------")
+		.append(myConfigBean.getAge()).append("------------")
+		.append(myConfigBean.getDesc()).append("------------")
+		.append(myConfigBean.getRandom()).append("------------");
+		return stringBuffer.toString();
+	}
+	
+	/**
+	 * http://localhost/test/appDsc
+	 * @return
+	 */
 	@RequestMapping("/test/appDsc")
 	@ResponseBody    //该注解表示接口
 	public String GetAppDsc(){
