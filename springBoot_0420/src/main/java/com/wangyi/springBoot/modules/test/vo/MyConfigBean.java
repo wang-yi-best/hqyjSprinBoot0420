@@ -1,4 +1,4 @@
-package com.wangyi.springBoot.modules.test.controller.vo;
+package com.wangyi.springBoot.modules.test.vo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
