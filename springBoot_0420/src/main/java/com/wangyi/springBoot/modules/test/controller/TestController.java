@@ -31,7 +31,10 @@ public class TestController {
 	@Autowired
 	private MyConfigBean myConfigBean;
 	
-	
+	/**
+	 * http://localhost/test/log
+	 * @return
+	 */
 	//日志的五种级别trace<debug<info<warn<error
 	@RequestMapping("/test/log")
 	@ResponseBody
