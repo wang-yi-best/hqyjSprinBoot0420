@@ -7,6 +7,8 @@
 */ 
 package com.wangyi.springBoot.modules.test.entity;
 
+import java.util.List;
+
 /**
 　 * <p>Title: Country</p>
 　 * <p>Description: </p>
@@ -27,6 +29,15 @@ public class Country {
 	private float lifeExpectancy;
 	private float gnp;
 	private String governmentForm;
+	
+	private List<City> cities;
+	
+	public List<City> getCities() {
+		return cities;
+	}
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
 	public int getCountryId() {
 		return countryId;
 	}

@@ -25,4 +25,12 @@ public interface CountryService {
 	*/
 	Country getCountryId(int countryId);
 
+	/**
+	*<p>Title: getCountryByName</p>
+	*<p>Description: </p>
+	　 * @param countryName
+	　 * @return
+	*/
+	Country getCountryByName(String countryName);
+
 }

@@ -38,4 +38,16 @@ public class CountryServiceImpl implements CountryService {
 		Country country = countryDao.getCountryId(countryId);
 		return country;
 	}
+
+	/* (non-Javadoc)
+	* <p>Title: getCountryByName</p>
+	* <p>Description: </p>
+	* @param countryName
+	* @return
+	* @see com.wangyi.springBoot.modules.test.service.CountryService#getCountryByName(java.lang.String)
+	*/
+	@Override
+	public Country getCountryByName(String countryName) {
+		return countryDao.getCountryByName(countryName);
+	}
 }

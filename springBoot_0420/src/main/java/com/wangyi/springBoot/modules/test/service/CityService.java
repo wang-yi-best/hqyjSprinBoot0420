@@ -10,6 +10,7 @@ package com.wangyi.springBoot.modules.test.service;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.wangyi.springBoot.modules.common.vo.Result;
 import com.wangyi.springBoot.modules.test.entity.City;
 
 /**
@@ -37,5 +38,38 @@ public interface CityService {
 	　 * @return
 	*/
 	PageInfo<City> getCitiesByPage(int currentPage, int pageSize, int countryId);
+
+	/**
+	*<p>Title: insertCity</p>
+	*<p>Description: </p>
+	　 * @param city
+	　 * @return
+	*/
+	Result<City> insertCity(City city);
+
+	/**
+	*<p>Title: getCityByCityName</p>
+	*<p>Description: </p>
+	　 * @param cityName
+	　 * @param localCityName
+	　 * @return
+	*/
+	City getCityByCityName(String cityName, String localCityName);
+
+	/**
+	*<p>Title: updateCity</p>
+	*<p>Description: </p>
+	　 * @param city
+	　 * @return
+	*/
+	Result<City> updateCity(City city);
+
+	/**
+	*<p>Title: deleteCity</p>
+	*<p>Description: </p>
+	　 * @param cityId
+	　 * @return
+	*/
+	Result<Object> deleteCity(int cityId);
 
 }
