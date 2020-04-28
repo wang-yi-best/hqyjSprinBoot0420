@@ -1,0 +1,71 @@
+<div>
+	this is modules test index
+	<!-- thymeleaf的常用标签练习 -->
+	<p>=============================================================</p>
+	<h3 style="color: red">th:text</h3>
+	<h1>th:text="${thymeleafTitle}"</h1>
+	<p>th:text="${thymeleafTitle}"</p>
+	<p>=============================================================</p>
+	
+	<h3>th:if,th:unless标签使用</h3>
+	<p th:if="${checked} == true">if true,this will display</p>
+	<p th:unless="${checked} == true">if true or not false,this will display</p>
+	<p th:if="${number} &lt;10">print if the number &lt 1;10</p>
+	<p th:if="${thymeleafTitle} == null">it is null</p>
+	<p>=============================================================</p>
+	
+	<h3>th:attr</h3>
+	checkbox:<input type="text" th:attr="type=${changeType}" th:checked="${checked}">
+	
+	<p>=============================================================</p>
+	
+	<h3>url,href标签的使用</h3>
+	<a ht:href="@{http://www.baidu.com}" target="_bank">Click it to turn to baidu</a>
+	<a th:href="${baiduUrl}" target="_bank">Click it to turn to shop beauty</a>
+	<img th:src="@{${photoUrl}}">
+	<p>=============================================================</p>
+	
+	<h3>th:object表签练习</h3>
+	<div th:object="${country}">
+		<p th:text="*{countryId}">countryId</p>
+		<p th:text="*{countryName}">countryName</p>
+		<p th:text="${country.countryId}">countryId</p><!-- 推荐写法 -->
+	</div>
+	
+	<p>=============================================================</p>
+	
+	<h3>post form,th:action,th:object,th:filed</h3>
+	<form th:action="${updateUrl}" method="post" th:object="${city}"></form>
+	<input type="hidden" name="_method" value="PUT">
+	City Id:        	<input th:filed="*{cityId}" readonly/>
+	City Name:   		<input th:filed="*{cityName}" readonly/>
+	Local city Name:	<input th:filed="*{localCityName}"/>
+	<button type="submit">submit info</button>
+	
+	<p>=============================================================</p>
+	
+	<h3>th:each遍历</h3>
+	<table>
+		<th>cityId</th>
+		<th>cityName</th>
+		<th>countryId</th>
+		<tr th:each = "city : ${cities}">
+			<td th:text="${city.cityId}"></td>
+			<td th:text="${city.cityName}"></td>
+			<td th:text="${city.countryId}"></td>
+			<!-- 拼接path参数 -->
+			<td>
+				<a th:href="@{'/test/index'}+${city.cityId}" th:text="${city.cityName}"></a>
+			</td>
+			<!-- 拼接查询参数 -->
+			<td>
+				<a th:href="@{'/test/index(pageSize=${city.cityId},currentPaage=1)'}" th:text="${city.cityName}"></a>
+			</td>
+		</tr>
+	</table>
+	<select>
+		<option th:each="city,cityStatus : ${cities}"
+		th:value="city.cityId" th:text="${city.cityName}></option>
+	</select>
+	<p>=============================================================</p>
+</div>

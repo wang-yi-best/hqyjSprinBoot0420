@@ -7,7 +7,9 @@
 */ 
 package com.wangyi.springBoot.modules.test.service.impl;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,7 +84,9 @@ public class CityServiceImpl implements CityService {
 	*/
 	@Override
 	public City getCityByCityName(String cityName, String localCityName) {
-		return cityDao.getCityByCityName(cityName,localCityName);
+		List<City> list = Optional.ofNullable(cityDao.getCityByCityName(cityName,localCityName))
+				.orElse(Collections.emptyList());
+		return list.isEmpty() ? null : list.get(0);
 	}
 
 	/* (non-Javadoc)

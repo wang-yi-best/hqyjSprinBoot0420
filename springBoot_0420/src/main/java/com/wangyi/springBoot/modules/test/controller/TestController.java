@@ -1,12 +1,16 @@
 package com.wangyi.springBoot.modules.test.controller;
 
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wangyi.springBoot.modules.test.vo.MyConfigBean;
@@ -69,12 +73,13 @@ public class TestController {
 	}
 	
 	/**
-	 * http://localhost/test/appDsc
+	 * http://localhost/test/appDsc?key=
 	 * @return
 	 */
 	@RequestMapping("/test/appDsc")
 	@ResponseBody    //该注解表示接口
-	public String GetAppDsc(){
-		return "hello,this is my first SpringBoot project";
+	public String GetAppDsc(HttpServletRequest request,@RequestParam String key){
+		String value = request.getParameter("key");
+		return "hello,this is my first SpringBoot project"+key+value;
 	}
 }

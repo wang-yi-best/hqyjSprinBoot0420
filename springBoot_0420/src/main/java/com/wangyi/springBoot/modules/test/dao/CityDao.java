@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -51,7 +52,7 @@ public interface CityDao {
 	　 * @return
 	*/
 	@Select("SELECT * FROM m_city WHERE city_name = #{cityName} AND local_city_name = #{localCityName}")
-	City getCityByCityName(String cityName, String localCityName);
+	List<City> getCityByCityName(@Param("cityName")String cityName, @Param("localCityName")String localCityName);
 
 	/**
 	*<p>Title: updateCity</p>
