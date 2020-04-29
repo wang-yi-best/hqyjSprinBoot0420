@@ -1,5 +1,6 @@
 package com.wangyi.springBoot.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -21,7 +22,9 @@ import com.wangyi.springBoot.interceptor.UrlInterceptor;
 @Configuration
 @AutoConfigureAfter({WebMvcAutoConfiguration.class})
 public class WebMVCConfig implements WebMvcConfigurer{
+	@Autowired
 	private UrlInterceptor urlInterceptor;
+	
 	@Bean
 	public FilterRegistrationBean<ParamterFilter> filterRegistrationBean() {
 		FilterRegistrationBean<ParamterFilter> filterRegistrationBean = new FilterRegistrationBean();
