@@ -6,7 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wangyi.springBoot.modules.test.entity.City;
 import com.wangyi.springBoot.modules.test.entity.Country;
@@ -28,6 +32,15 @@ public class TestPageController {
 	@Autowired
 	private CityService cityService;
 	
+	@PostMapping(value="file",consumes = "multipart/form-data")
+	public String uploadFile(@RequestParam MultipartFile file,RedirectAttributes redirectAttributes) {
+		if (file.isEmpty()) {
+			redirectAttributes.addFlashAttribute("message","please select file");
+			return "redirect:test/index";
+		}
+		return null;
+	}
+	
 	@RequestMapping("/index")
 	public String textIndexPage(ModelMap modelMap) {
 		Country country= countryService.getCountryId(522);
@@ -45,7 +58,7 @@ public class TestPageController {
 		modelMap.addAttribute("city", city);
 		modelMap.addAttribute("updateUrl", "api/city");
 		modelMap.addAttribute("cities", cities);
-		modelMap.addAttribute("template", "test/index");
+//		modelMap.addAttribute("template", "test/index");
 		return "index";
 	}
 	
