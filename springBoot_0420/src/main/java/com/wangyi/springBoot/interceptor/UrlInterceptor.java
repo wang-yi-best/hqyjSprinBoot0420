@@ -39,6 +39,7 @@ public class UrlInterceptor implements HandlerInterceptor {
 		
 		String url =request.getServletPath();
 		String template = (String)modelAndView.getModelMap().get("template");
+	//	if (StringUtils.isNotBlank(template)) {
 		if (StringUtils.isNotBlank(template)) {
 			if (url.startsWith("/")) {
 				url = url.substring(1);

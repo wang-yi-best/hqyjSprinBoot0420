@@ -1,5 +1,7 @@
 package com.wangyi.springBoot.modules.test.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,13 +34,67 @@ public class TestPageController {
 	@Autowired
 	private CityService cityService;
 	
+	/**
+	 * 
+	*<p>Title: uploadFile</p>
+	*<p>Description:单个文件上传 </p>
+	　 * @param file
+	　 * @param redirectAttributes
+	　 * @return
+	 */
 	@PostMapping(value="file",consumes = "multipart/form-data")
 	public String uploadFile(@RequestParam MultipartFile file,RedirectAttributes redirectAttributes) {
 		if (file.isEmpty()) {
 			redirectAttributes.addFlashAttribute("message","please select file");
 			return "redirect:test/index";
 		}
-		return null;
+		try {
+			String fileName = file.getOriginalFilename();
+			String filePath = "D:\\file\\upload\\" + fileName;
+			File file2 = new File(filePath);
+			file.transferTo(file2);
+			
+			redirectAttributes.addAttribute("message", "upload file success");
+		} catch (IllegalStateException | IOException e) {
+			redirectAttributes.addAttribute("message", "upload file fail");
+			
+			e.printStackTrace();
+			return "redirect:test/index";
+		}
+		return "redirect:test/index";
+	}
+	
+	/**
+	 * 
+	*<p>Title: uploadFiles</p>
+	*<p>Description:多个文件上传(需要弄清楚的是多文件上传的原理，如果存放上传文件为空则遍历完整个数组，只有有个文件都可以传) </p>
+	　 * @param file
+	　 * @param redirectAttributes
+	　 * @return
+	 */
+	@PostMapping(value="files",consumes = "multipart/form-data")//注意上传文件的consumes的值类型（与表单的值对应），和下列参数类型
+	public String uploadFiles(@RequestParam MultipartFile[] files,RedirectAttributes redirectAttributes) {
+		boolean flag = true;
+		try {
+		for (MultipartFile file : files) {
+				if (file.isEmpty()) {
+					continue;
+				}
+				String fileName = file.getOriginalFilename();
+				String filePath = "D:\\file\\upload\\" + fileName;
+				File file2 = new File(filePath);
+				file.transferTo(file2);
+			}
+		} catch (IllegalStateException | IOException e) {
+			redirectAttributes.addFlashAttribute("message","please select file");
+			e.printStackTrace();
+		}
+		if (flag) {
+			redirectAttributes.addAttribute("message", "upload file fail");
+		} else {
+			redirectAttributes.addAttribute("message", "upload file success");
+		}
+		return "redirect:test/index";
 	}
 	
 	@RequestMapping("/index")
