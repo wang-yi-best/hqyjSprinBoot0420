@@ -12,13 +12,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AutoConfigureAfter({WebMvcAutoConfiguration.class})
 public class WebServerConfig {
-
+	
 	@Value("${http.port}")
 	private int httpPort;
-	
+
 	@Bean
 	public Connector connector() {
-		
 		Connector connector = new Connector();
 		connector.setScheme("http");
 		connector.setPort(httpPort);
@@ -27,8 +26,8 @@ public class WebServerConfig {
 	
 	@Bean
 	public ServletWebServerFactory servletWebServerFactory() {
-		TomcatServletWebServerFactory tswf = new TomcatServletWebServerFactory();
-		tswf.addAdditionalTomcatConnectors(connector());
-		return tswf;
+		TomcatServletWebServerFactory tomcatFactory = new TomcatServletWebServerFactory();
+		tomcatFactory.addAdditionalTomcatConnectors(connector());
+		return tomcatFactory;
 	}
 }

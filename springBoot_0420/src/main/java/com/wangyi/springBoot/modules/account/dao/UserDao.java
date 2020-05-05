@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import com.wangyi.springBoot.modules.account.entity.User;
 import com.wangyi.springBoot.modules.common.vo.Result;
@@ -18,6 +19,7 @@ import com.wangyi.springBoot.modules.common.vo.Result;
 　 * @date 2020年4月26日 下午12:48:47 
 　 * @version 1.0
 */
+@Repository
 @Mapper
 public interface UserDao {
 

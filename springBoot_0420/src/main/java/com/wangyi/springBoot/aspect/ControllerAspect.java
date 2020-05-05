@@ -19,27 +19,37 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
-　 * <p>Title: AspectController</p>
-　 * <p>Description: </p>
-　 * @author yi.wang
-　 * @date 2020年4月29日 上午7:47:30 
-　 * @version 1.0
-*/
+ * <p>
+ * Title: AspectController
+ * </p>
+ * <p>
+ * Description:
+ * </p>
+ * @author yi.wang @date 2020年4月29日 上午7:47:30 @version 1.0
+ */
 @Aspect
 @Component
-public class AspectController {
+public class ControllerAspect {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(ControllerAspect.class);
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(AspectController.class);
-	
-	//关联在方法上的切点，第一个*代表返回类型不限，第二个*代表module下所有子包，第三个*代表所有类，第四个*代表所有方法，(..) 代表参数不限
+	/**
+	 * 关联在方法上的切点
+	 * 第一个*代表返回类型不限
+	 * 第二个*代表module下所有子包
+	 * 第三个*代表所有类
+	 * 第四个*代表所有方法
+	 * (..) 代表参数不限
+	 * Order 代表优先级，数字越小优先级越高
+	 * com.wangyi.springBoot.aspect.ControllerAspect
+	 */
 	@Pointcut("execution(public * com.wangyi.springBoot.modules.*.controller.*.*(..))")
-	@Order(1)//代表优先级，数字越小优先级越高
-	public void controllerPointCut(){
-		
-	}
+	@Order(1)
+	public void controllerPointCut() {}
 	
-	@Before(value = "com.wangyi.springBoot.aspect.AspectController.controllerPointCut()")
-	public void beforCOntroller(JoinPoint joinPoint) {
+	@Before(value = "com.wangyi.springBoot.aspect.ControllerAspect.controllerPointCut()")
+	public void beforeController(JoinPoint joinPoint) {
+		LOGGER.debug("=======================");
 		LOGGER.debug("Before controller");
 		ServletRequestAttributes attributes = 
 				(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -57,14 +67,18 @@ public class AspectController {
 	 * ProceedingJoinPoint 继承了 JoinPoint，是在 JoinPoint 的基础上暴露出  proceed 这个方法，
 	 * -这个是 aop 代理链执行的方法， 执行proceed方法的作用是让目标方法执行，这也是环绕通知和前置、后置通知方法的一个最大区别;
 	 */
-	@Around(value = "com.wangyi.springBoot.aspect.AspectController.controllerPointCut()")
-	public Object aroundCOntroller(ProceedingJoinPoint pJoinPoint) {
-		
-		return null;
+	@Around(value="com.wangyi.springBoot.aspect.ControllerAspect.controllerPointCut()")
+	public Object aroundController(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+		LOGGER.debug("Around controller");
+		return proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
 	}
 	
-	@After(value = "com.wangyi.springBoot.aspect.AspectController.controllerPointCut()")
-public void afterCOntroller(JoinPoint joinPoint) {
-		
+	/**
+	 * -后置通知
+	 */
+	@After(value="com.wangyi.springBoot.aspect.ControllerAspect.controllerPointCut()")
+	public void afterController() {
+		LOGGER.debug("After Controller.");
+		LOGGER.debug("=======================");
 	}
 }

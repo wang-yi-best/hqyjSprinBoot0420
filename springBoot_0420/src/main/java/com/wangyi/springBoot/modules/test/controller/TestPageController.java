@@ -41,6 +41,7 @@ public class TestPageController {
 	　 * @param file
 	　 * @param redirectAttributes
 	　 * @return
+	127.0.0.1/test/file
 	 */
 	@PostMapping(value="file",consumes = "multipart/form-data")
 	public String uploadFile(@RequestParam MultipartFile file,RedirectAttributes redirectAttributes) {
@@ -97,22 +98,25 @@ public class TestPageController {
 		return "redirect:test/index";
 	}
 	
+	//127.0.0.1/test/index
 	@RequestMapping("/index")
-	public String textIndexPage(ModelMap modelMap) {
-		Country country= countryService.getCountryId(522);
-		List<City> cities =  cityService.getCitiesByCountry(522);
+	public String testIndexPage(ModelMap modelMap) {
+		int countryId = 522;
+		Country country = countryService.getCountryId(countryId);
+		List<City> cities = cityService.getCitiesByCountry(countryId);
 		cities = cities.stream().limit(10).collect(Collectors.toList());
-		City city =cities.get(0);
-		modelMap.addAttribute("thymeleafTitle", "this is thymeleaf Title");
+		City city = cities.get(0);
+		
+		modelMap.addAttribute("thymeleafTitle", "thymeleaf Title");
 		modelMap.addAttribute("checked", true);
-		modelMap.addAttribute("number", 1);
+		modelMap.addAttribute("currentNumber", 99);
 		modelMap.addAttribute("changeType", "checkbox");
 		modelMap.addAttribute("baiduUrl", "http://www.baidu.com");
-		modelMap.addAttribute("photoUrl", 
-				"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588069408128&di=6b60c8d63f37b972642e9d41b7198a9b&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fd009b3de9c82d1587e249850820a19d8bd3e42a9.jpg");
+		modelMap.addAttribute("shopLogo", "http://cdn.duitang.com/uploads"
+				+ "/item/201308/13/20130813115619_EJCWm.thumb.700_0.jpeg");
 		modelMap.addAttribute("country", country);
 		modelMap.addAttribute("city", city);
-		modelMap.addAttribute("updateUrl", "api/city");
+		modelMap.addAttribute("updateCityUri", "/api/city");
 		modelMap.addAttribute("cities", cities);
 //		modelMap.addAttribute("template", "test/index");
 		return "index";

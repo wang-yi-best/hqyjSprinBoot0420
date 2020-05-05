@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.wangyi.springBoot.filter.ParamterFilter;
+import com.wangyi.springBoot.filter.ParameterFilter;
 import com.wangyi.springBoot.interceptor.UrlInterceptor;
 
 /**
@@ -21,22 +21,20 @@ import com.wangyi.springBoot.interceptor.UrlInterceptor;
 */
 @Configuration
 @AutoConfigureAfter({WebMvcAutoConfiguration.class})
-public class WebMVCConfig implements WebMvcConfigurer{
+public class WebMvcConfig implements WebMvcConfigurer {
+	
 	@Autowired
 	private UrlInterceptor urlInterceptor;
-	
+
 	@Bean
-	public FilterRegistrationBean<ParamterFilter> filterRegistrationBean() {
-		FilterRegistrationBean<ParamterFilter> filterRegistrationBean = new FilterRegistrationBean();
-		filterRegistrationBean.setFilter(new ParamterFilter());
-		return filterRegistrationBean;
+	public FilterRegistrationBean<ParameterFilter> filterRegistrationBean () {
+		FilterRegistrationBean<ParameterFilter> filterRegister = new FilterRegistrationBean<>();
+		filterRegister.setFilter(new ParameterFilter());
+		return filterRegister;
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(urlInterceptor).addPathPatterns("/**");
-		WebMvcConfigurer.super.addInterceptors(registry);
 	}
-	
-	
 }

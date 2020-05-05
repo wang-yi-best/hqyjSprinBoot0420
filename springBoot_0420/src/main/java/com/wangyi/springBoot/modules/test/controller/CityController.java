@@ -39,7 +39,7 @@ public class CityController {
 	private CityService cityService;
 	
 	/**
-	 * http://127.0.0.1/test/api/cities/522
+	 * http://127.0.0.1/api/cities/522
 	*<p>Title: getCitiesByCountry</p>
 	*<p>Description: </p>
 	　 * @param countryId

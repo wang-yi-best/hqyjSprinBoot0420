@@ -21,39 +21,42 @@ import com.github.pagehelper.util.StringUtil;
 */
 @Component
 public class UrlInterceptor implements HandlerInterceptor {
-
+	
 	private final static Logger LOGGER = LoggerFactory.getLogger(UrlInterceptor.class);
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		LOGGER.debug("afterCompletion LOGGER");
-		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+		LOGGER.debug("Pre -------------------");
+		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
+		LOGGER.debug("Post -------------------");
 		
-		LOGGER.debug("postHandle LOGGER");
-		
-		String url =request.getServletPath();
-		String template = (String)modelAndView.getModelMap().get("template");
-	//	if (StringUtils.isNotBlank(template)) {
-		if (StringUtils.isNotBlank(template)) {
-			if (url.startsWith("/")) {
-				url = url.substring(1);
-			}
-			modelAndView.getModelMap().put(url, template);
+		if (modelAndView == null || modelAndView.getViewName().startsWith("redirect")) {
+			return;
 		}
+		
+		String uri = request.getServletPath();
+		String template = (String) modelAndView.getModelMap().get("template");
+		if (StringUtils.isBlank(template)) {
+			if (uri.startsWith("/")) {
+				uri = uri.substring(1);
+			}
+			modelAndView.getModelMap().put("template", uri);
+		}
+		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		LOGGER.debug("preHandle LOGGER");
-		return HandlerInterceptor.super.preHandle(request, response, handler);
+		LOGGER.debug("After -------------------");
+		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
-	
+
 }

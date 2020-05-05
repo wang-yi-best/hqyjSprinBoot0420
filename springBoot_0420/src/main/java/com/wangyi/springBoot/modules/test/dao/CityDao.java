@@ -29,8 +29,9 @@ public interface CityDao {
 	　 * @param countryId
 	　 * @return
 	*/
-//	@Select("SELECT * FROM m_city WHERE m_city.country_id=#{countryId}")
+	@Select("SELECT * FROM m_city WHERE m_city.country_id=#{countryId}")
 	List<City> getCitiesByCountry(int countryId);
+	List<City> getCitiesByCountry1(int countryId);
 //	List<City> getCitiesByCountry(int countryId);
 
 	/**

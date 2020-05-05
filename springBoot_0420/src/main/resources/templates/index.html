@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"  
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>springboot_0420</title>
-<META name="description" content="THORNBIRD.COM" />
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>springBoot-04420</title>
+<META name="description" content="THORNBIRD.COM"/>
 
-<!-- 引入js和css -->
-<script th:src="@{http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js}"></script>
+ 	<!-- 引入css需要注意引用是外部还是内部文件 -->
+ 
+		<!-- 引入js -->
+	<script th:src="@{http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js}"></script>
+	
 </head>
-
-<!-- "th:"  是thymeleaf的标识 -->
 <body>
 	<!-- header -->
 	<div th:replace="fragments/header :: header"></div>
