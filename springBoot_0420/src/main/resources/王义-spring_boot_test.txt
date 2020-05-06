@@ -1,0 +1,104 @@
+﻿一、选择题（共12小题，每小题2.5分，共30分）
+	以下不是spring boot优点的是 (D)
+		A．快速搭建项目
+		B．简化配置  
+		C．自动配置  
+		D．无需容器
+	Spring Boot配置，以下哪个优先级最高（C）
+		A、外置：xx.jar同目录下/config/application.properties；a>b
+		B、外置：xx.jar同目录下/config/application.yml；
+		C、内置：src/main/resources/config；
+		D、内置：src/main/resources
+	以下log日志级别哪个最高（A）
+		A、DEBUG
+		B、INFO
+		C、WARN
+		D、ERROR
+	以下不是spring boot的核心注解的是 (D)
+		A.	@SpringBootConfiguration
+		B.	@EnableAutoConfiguration
+		C.	@ComponentScan
+		D.	@MapperScan
+	要使用springMVC的功能，以下哪个架包是必须加的 (D)
+		A．spring-boot-starter-jdbc  
+		B．spring-boot-starter-thymeleaf  
+		C．spring-boot-starter-web  
+		D．mybatis-spring-boot-starter
+	以下哪个注解不能加在类上 (B)
+		A.	@Controller
+		B.	@ResponseBody
+		C.	@RestController
+		D.	@RequestMapping
+	当控制层上有@RestController注解时，方法中返回一个字符串“<h1>Hello</h1>” 的结果是 (A)
+		A. 一级标题显示的Hello
+		B.	找不到Hello.html
+		C.	<h1>Hello</>
+		D.	Hello
+	SpringBoot项目中配置文件的格式 (A)
+		A．properties  
+		B．yml  
+		C．两者都可以
+	前台使用json参数格式，控制器consumer、参数使用的注解是（B）
+		A、application/josn ---- @RequestBody
+		B、application/josn ---- @ModelAttribute
+		C、application/x-www-form-urlencoded ---- @RequestBody
+		D、application/x-www-form-urlencoded ---- @ModelAttribute
+	@Pointcut("execution(public * com.thornBird.sbd.modules.*.controller.*.*(..))")，第三个*代表（C）
+		A、代表返回类型不限
+		B、代表module下所有子包
+		C、代表所有类
+		D、代表所有方法
+	Url匹配风格中/admin*，以下哪个匹配不正确（A）
+		A、/admin
+		B、/admin1
+		C、/admin123
+		D、/admin/1
+	Mybatis框架中，插入数据使用那个注解（D）
+		A、@Update
+		B、@Insert
+		C、@Select
+		D、@InsertMapping
+二、填空题（共5小题，每小题5分，共25分）
+	Java配置依赖的2个注解是__dependencies________，___dependency________；
+	修改tomcat端口号为9090应该怎么写？___http.port=9090_________；
+	自定义拦截器需要实现___HandlerInterceptor_____接口；
+	过滤器需要使用___@Filter______注解；
+	上传文件，使用_流___接收文件对象，consumer使用_application/json____；
+三、问答题（每题5分）
+	1.简述Restful规则？
+	2.简述Git使用流程，写几个常用Git命令；
+	git commit
+	git merge
+	git push
+	git pull
+	git clone +仓库地址
+	简述敏捷开发、Scrum流程；
+	本质是把一个项目分成若干个小模块（即分支，可能会拆分为某一个功能），每个模块可以独立完成，互不影响，当完成各模块整合在一起。每天每个人从自己的小分支上传代码，有专门人员进行汇总，在第二天上班前需开例会，说明任务的完成情况及所遇到的问题，以及今天的规划和预计完成情况。在敲代码前需先pull最新代码，解决整合相应代码冲突。
+	project---》sprint（指定开发时间，拆分情景《每个人完成同一情景避免情景相互影响》）----》issue1、issue2、issue3.........（每一个issue可能是一个人完成）
+
+
+	3.简述shiro两大功能实现流程；
+	shiro是一个第三方框架，实现的两大功能是身份验证权限管理（基于URL）和加密（MD5）。
+	Object-->Manager-->realm
+	首先需要有Object对象，需要对四大参数进行封装，用户名、密码、身份验证和...，需要把用户名和密码进行封装成token（令牌）,自己需要写一个realm类需要继承身份验证realm这个类。当把token传入进来比较时，如果密码或者用户名不一致就会匹配不成功,在用户匹配成功后会根据用户的角色进入不同的页面
+	加密可以在xml文件里设置加密次数如1024次，加密需要salt来进行加密，salt可以是用户名或者用户id（由UUID产生的唯一标识），所以两个人的密码一样经过加密也会不一样
+
+
+四、编程题（共2小题，1题12分，2题13分，共25分）
+	1.访问控制层，将一个List装入requset中，再在页面上以表格的形式显示出来
+	List<user> users = userService.queryUsersByUserId(userId);
+	return users;
+		<table>
+			<th>
+				<th>用户id</th><th>用户名</th><th>密码</th>
+			</th>
+			<tr th:each = "user : ${users}">
+				<td th:text="${user.userId}"></td>
+				<td th:text="${user.userName}"></td>
+				<td th:text="${user.password}"></td>
+			</tr>
+		</table>
+	2.请写出重定向到某个页面的代码
+	pubilc String Update(@RequestBody User user){
+		return "redirect:update"
+	}
